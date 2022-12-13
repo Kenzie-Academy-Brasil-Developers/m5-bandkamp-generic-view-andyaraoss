@@ -13,9 +13,6 @@ class SongView(APIView, PageNumberPagination):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, pk):
-        """
-        Obtençao de musicas
-        """
         songs = Song.objects.filter(album_id=pk)
 
         result_page = self.paginate_queryset(songs, request)
@@ -24,9 +21,6 @@ class SongView(APIView, PageNumberPagination):
         return self.get_paginated_response(serializer.data)
 
     def post(self, request, pk):
-        """
-        Criaçao de musica
-        """
         album = get_object_or_404(Album, pk=pk)
 
         serializer = SongSerializer(data=request.data)

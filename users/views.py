@@ -4,19 +4,12 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import UserSerializer
 from django.shortcuts import get_object_or_404
 from .permissions import IsAccountOwner
+from rest_framework import generics
 
 
-class UserView(APIView):
-    def post(self, request: Request) -> Response:
-        """
-        Registro de usuários
-        """
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        serializer.save()
-
-        return Response(serializer.data, status.HTTP_201_CREATED)
+class UserView(generics.CreateAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
 
 class UserDetailView(APIView):
@@ -24,21 +17,15 @@ class UserDetailView(APIView):
     permission_classes = [IsAccountOwner]
 
     def get(self, request: Request, pk: int) -> Response:
-        """
-        Obtençao de usuário
-        """
         user = get_object_or_404(User, pk=pk)
 
         self.check_object_permissions(request, user)
 
         serializer = UserSerializer(user)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status.HTTP_200_OK)
 
     def patch(self, request: Request, pk: int) -> Response:
-        """
-        Atualização de usuário
-        """
         user = get_object_or_404(User, pk=pk)
 
         self.check_object_permissions(request, user)
@@ -47,12 +34,9 @@ class UserDetailView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.data)
+        return Response(serializer.data, status.HTTP_200_OK)
 
     def delete(self, request: Request, pk: int) -> Response:
-        """
-        Deleçao de usuário
-        """
         user = get_object_or_404(User, pk=pk)
 
         self.check_object_permissions(request, user)
