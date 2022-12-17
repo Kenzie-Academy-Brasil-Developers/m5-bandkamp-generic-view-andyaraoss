@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from django.core.management.utils import get_random_secret_key
+import dj_database_url
 from pathlib import Path
 from datetime import timedelta
 import os
 import dotenv
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,9 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 DJANGO_APPS = [
