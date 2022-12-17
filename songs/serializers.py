@@ -1,6 +1,5 @@
-from rest_framework import serializers
 from .models import Song
-import ipdb
+from rest_framework import serializers
 
 
 class SongSerializer(serializers.ModelSerializer):

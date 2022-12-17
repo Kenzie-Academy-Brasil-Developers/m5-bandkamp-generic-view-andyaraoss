@@ -1,8 +1,7 @@
-from rest_framework.views import APIView, Request, Response, status
 from .models import User
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import UserSerializer
 from .permissions import IsAccountOwner
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import generics
 
 
